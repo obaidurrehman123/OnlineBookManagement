@@ -1,9 +1,11 @@
 <?php
 
 use App\Http\Controllers\BookController;
+use App\Http\Controllers\CategoryController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -20,15 +22,27 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-//Book routes
+// miidleware authorized + admin
 Route::middleware(['auth.api','admin.user'])->group(function () {
+
+    //book protected routes
     Route::post('/createBook',[BookController::class,'addBook']);
     Route::delete('/deleteBook/{id}',[BookController::class,'deleteBook']);
     Route::put('/updateBook/{id}',[BookController::class,'updateBook']);
+
+    //category protected routes
+    Route::post('/createCategory',[CategoryController::class,'addCategory']);
+    Route::delete('/deleteCategory/{id}',[CategoryController::class,'deleteCategory']);
+    Route::put('/updateCategory/{id}',[CategoryController::class,'updateCategory']);
 });
 
+//book public routes
 Route::get('/getAllbooks',[BookController::class,'getAllBooks']);
 Route::get('/searchProduct/{keyword}',[BookController::class,'searchingBookNameAndDes']);
+
+//category public routes
+Route::get('/getAllCat' , [CategoryController::class,'getAllCategories']);
+Route::get('/getSingleCat/{id}' , [CategoryController::class , 'getSingleCategory']);
 
 // user routes
 Route::post('/createUser',[UserController::class,'signUp']);

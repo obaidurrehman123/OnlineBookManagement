@@ -17,6 +17,10 @@ class User extends Model implements Authenticatable,JWTSubject
         'role',
     ];
 
+    public function orders(){
+        return $this->hasMany(Order::class);
+    }
+
     public function getJWTIdentifier()
     {
         return $this->getKey();

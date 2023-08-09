@@ -11,9 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('categories', function (Blueprint $table) {
+        Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->string('category_name');
+            $table->unsignedBigInteger('u_id');
+            $table->date('order_date');
+            $table->float('total_amount');
+            $table->enum('status', ['shipped', 'unshipped'])->default('unshipped');
+            $table->foreign('u_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -23,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('categories');
+        Schema::dropIfExists('orders');
     }
 };

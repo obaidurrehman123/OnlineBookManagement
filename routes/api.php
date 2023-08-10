@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\OrderItemController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
@@ -34,7 +36,20 @@ Route::middleware(['auth.api','admin.user'])->group(function () {
     Route::post('/createCategory',[CategoryController::class,'addCategory']);
     Route::delete('/deleteCategory/{id}',[CategoryController::class,'deleteCategory']);
     Route::put('/updateCategory/{id}',[CategoryController::class,'updateCategory']);
+
+    // get All Order Details
+    Route::get('/getAllOrders',[OrderController::class,'showAllOrders']);
+    Route::put('/updateStatus/{id}',[OrderController::class,'updateOrderStatus']);
 });
+
+// middleware authorized
+Route::middleware(['auth.api'])->group(function(){
+    //order routes
+    Route::post('/createUserOrd' , [OrderController::class , 'createOrder']);
+    //orderitem routes
+    Route::post('/addOrderItems/{id}',[OrderItemController::class , 'addOrderItem']);
+});
+
 
 //book public routes
 Route::get('/getAllbooks',[BookController::class,'getAllBooks']);

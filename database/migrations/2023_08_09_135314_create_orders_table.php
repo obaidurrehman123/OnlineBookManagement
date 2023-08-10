@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('u_id');
             $table->date('order_date');
-            $table->float('total_amount');
+            $table->decimal('total_amount', 10, 2)->default(0.0);
             $table->enum('status', ['shipped', 'unshipped'])->default('unshipped');
             $table->foreign('u_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();

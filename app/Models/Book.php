@@ -15,4 +15,8 @@ class Book extends Model
         'price',
         'quantity'
     ];
+    public function orderItems()
+    {
+        return $this->hasMany(OrderItem::class);
+    }
 }

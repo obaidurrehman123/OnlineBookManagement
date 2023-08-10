@@ -9,9 +9,7 @@ use Illuminate\Support\Facades\Validator;
 
 class BookController extends Controller
 {
-
   //adding product
-
   public function addBook(Request $request){
 
     $bookValidation = Validator::make($request->all(), [
@@ -83,7 +81,6 @@ class BookController extends Controller
   // searching the books
 
   public function searchingBookNameAndDes($keyword){
-
     $bookRes = Book::where('title' , 'like' , '%' .$keyword. '%')->orWhere('description','like' , '%'.$keyword.'%')->get();
     if(!$bookRes){
         return response()->json(['success'=>false , 'message'=>'book not found'],404);

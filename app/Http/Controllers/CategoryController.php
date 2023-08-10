@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Validator;
 
 class CategoryController extends Controller
 {
+    // adding category
     public function addCategory(Request $request){
         $categoryValidation = Validator::make($request->all(), [
             'category_name' => 'required',
@@ -23,6 +24,7 @@ class CategoryController extends Controller
         return response()->json(['success'=>true , 'message'=>'successfully created the category' , 'data' => $category],200);
     }
 
+    // delete category
     public function deleteCategory($id){
         $category= Category::find($id);
         if(!$category){
@@ -32,6 +34,7 @@ class CategoryController extends Controller
         return response()->json(['success'=>true , 'message'=>'successfully deleted the category'],200);
     }
 
+    // update category
     public function updateCategory(Request $request , $id){
         $category= Category::find($id);
         if(!$category){
@@ -41,6 +44,7 @@ class CategoryController extends Controller
         return response()->json(['success'=>true,'updatedCategory'=>$category], 200);
     }
 
+    // get all categories
     public function getAllCategories(){
         $category = Category::all();
         if(!$category){
@@ -49,6 +53,7 @@ class CategoryController extends Controller
         return response()->json(['success'=>true , 'message'=>'successfully fetched the categories' , $category],200);
       }
 
+    // get single category
     public function getSingleCategory($id){
         $category= Category::find($id);
         if(!$category){

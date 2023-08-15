@@ -12,7 +12,7 @@ class UserController extends Controller
     public function signUp(Request $request) {
 
         $userValidation = Validator::make($request->all(), [
-            'username' => 'required',
+            'username' => 'required|unique.users',
             'email' => 'required|email|unique:users',
             'password' => 'required'
         ]);

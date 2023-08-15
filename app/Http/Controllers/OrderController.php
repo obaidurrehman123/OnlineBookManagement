@@ -62,4 +62,19 @@ class OrderController extends Controller
         $order->save();
         return response()->json(['success' => true, 'message' => 'Order status updated successfully'],200);
     }
+
+    // filter the unshipped order
+
+    public function getUnshippedOrderDetails($order_id)
+    {
+        $unshippedOrder = Order::where('id', $order_id)
+            ->where('status', 'unshipped')
+            ->with('orderItems.book')
+            ->first();
+
+        if (!$unshippedOrder) {
+            return response()->json(['success' => false, 'message' => 'Unshipped order not found'], 404);
+        }
+        return response()->json(['success' => true, 'order' => $unshippedOrder],200);
+    }
 }

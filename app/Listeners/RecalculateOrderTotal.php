@@ -22,8 +22,12 @@ class RecalculateOrderTotal
     public function handle(UpdateOrderTotal $event): void
     {
         $order = $event->order;
-        $newTotal = $order->orderItems->sum('subtotal');
-        dd($newTotal);
-        $order->update(['total_amount' => $newTotal]);
+        $newTotal = 0;
+        foreach ($order->orderItems as $orderItem) {
+            //dd($orderItem);
+            $newTotal += $orderItem->subtotal;
+        }
+        $order->total_amount = $newTotal;
+        $order->save();
     }
 }

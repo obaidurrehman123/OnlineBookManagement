@@ -40,6 +40,7 @@ Route::middleware(['auth.api','admin.user'])->group(function () {
     // get All Order Details
     Route::get('/getAllOrders',[OrderController::class,'showAllOrders']);
     Route::put('/updateStatus/{id}',[OrderController::class,'updateOrderStatus']);
+    Route::get('/getUnshipped/{id}',[OrderController::class,'getUnshippedOrderDetails']);
 });
 
 // middleware authorized
@@ -48,6 +49,9 @@ Route::middleware(['auth.api'])->group(function(){
     Route::post('/createUserOrd' , [OrderController::class , 'createOrder']);
     //orderitem routes
     Route::post('/addOrderItems/{id}',[OrderItemController::class , 'addOrderItem']);
+    Route::get('/getorderItems/{id}',[OrderItemController::class ,'getOrderItems']);
+    Route::delete('/deleteOrderItem/{id}',[OrderItemController::class,'removeItems']);
+    Route::put('/updateOrderItems/{id}',[OrderItemController::class,'updateOrderItems']);
 });
 
 

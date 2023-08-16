@@ -1,9 +1,11 @@
 <?php
 
 use App\Http\Controllers\BookController;
+use App\Http\Controllers\BookImageController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\OrderItemController;
+use App\Http\Controllers\ReviewsController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
@@ -41,17 +43,28 @@ Route::middleware(['auth.api','admin.user'])->group(function () {
     Route::get('/getAllOrders',[OrderController::class,'showAllOrders']);
     Route::put('/updateStatus/{id}',[OrderController::class,'updateOrderStatus']);
     Route::get('/getUnshipped/{id}',[OrderController::class,'getUnshippedOrderDetails']);
+
+    //BookImage Routes
+    Route::post('/addBookImage/{id}' , [BookImageController::class ,'addBookImages']);
+    Route::delete('/deleteBookImage/{id}',[BookImageController::class,'deleteBookImage']);
+    Route::post('/updateBookImage/{id}',[BookImageController::class,'updateBookImage']);
 });
 
 // middleware authorized
 Route::middleware(['auth.api'])->group(function(){
     //order routes
     Route::post('/createUserOrd' , [OrderController::class , 'createOrder']);
+
     //orderitem routes
     Route::post('/addOrderItems/{id}',[OrderItemController::class , 'addOrderItem']);
     Route::get('/getorderItems/{id}',[OrderItemController::class ,'getOrderItems']);
     Route::delete('/deleteOrderItem/{id}',[OrderItemController::class,'removeItems']);
     Route::put('/updateOrderItems/{id}',[OrderItemController::class,'updateOrderItems']);
+
+    //Reviews routes
+    Route::post('/addReviews/{id}',[ReviewsController::class ,'addReviews']);
+    Route::delete('/deleteReview/{id}',[ReviewsController::class,'deleteReview']);
+    Route::put('/updatereview/{id}',[ReviewsController::class,'updateReview']);
 });
 
 
@@ -63,6 +76,13 @@ Route::get('/searchProduct/{keyword}',[BookController::class,'searchingBookNameA
 Route::get('/getAllCat' , [CategoryController::class,'getAllCategories']);
 Route::get('/getSingleCat/{id}' , [CategoryController::class , 'getSingleCategory']);
 
-// user routes
+// user public routes
 Route::post('/createUser',[UserController::class,'signUp']);
 Route::post('/logInUser' , [UserController::class,'signIn']);
+
+//BookImages public routes
+Route::get('/getBookImages/{id}',[BookImageController::class , 'getBookImages']);
+
+//Reviews public routes
+
+Route::get('/getAllReview/{id}',[ReviewsController::class ,'getReviews']);

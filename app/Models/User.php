@@ -21,6 +21,10 @@ class User extends Model implements Authenticatable,JWTSubject
         return $this->hasMany(Order::class);
     }
 
+    public function reviews(){
+        return $this->hasMany(Reviews::class);
+    }
+
     public function getJWTIdentifier()
     {
         return $this->getKey();

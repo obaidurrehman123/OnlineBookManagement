@@ -19,4 +19,12 @@ class Book extends Model
     {
         return $this->hasMany(OrderItem::class);
     }
+    public function bookImages()
+    {
+        return $this->hasMany(BookImage::class);
+    }
+
+    public function reviews(){
+        return $this->hasMany(Reviews::class);
+    }
 }

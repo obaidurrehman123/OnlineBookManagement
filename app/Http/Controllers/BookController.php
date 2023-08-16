@@ -87,5 +87,4 @@ class BookController extends Controller
     }
     return response()->json(['success'=>true ,'message'=>'successfull search the book' ,'data'=>$bookRes],200);
   }
-
 }
